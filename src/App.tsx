@@ -369,6 +369,9 @@ function Overall({ data }: { data: Character[] }) {
             <div className="text-[11px] text-slate-600 flex items-center gap-2">
               <span>Rank {a.rank}</span>
               {seed && (<span className="inline-flex items-center gap-1 px-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">{seed}</span>)}
+              {typeof a.breedInit!=="undefined" && (
+                <span className="opacity-70">({remain}/{a.breedInit||0})</span>
+              )}
             </div>
           </div>
         </div>
