@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 // =============================================================
-// Once Human Ranch Helper — Restored Full UI (v4.3.0)
+// Once Human Ranch Helper — Restored Full UI (v4.3.2)
 // - OVERALL: badges + grouped lists + seed short label
 // - RANCH: 1 row = 1 pair (fixed 3 pairs) with full Animal editor
 // - Preserve scroll on edits
@@ -112,8 +112,8 @@ function speciesIcon(sp: string) {
 }
 
 const SEED_SET = new Set<string>([
-  // Seed traits (ตามที่คุณยืนยันทั้งหมด)
-  "Golden Sheep Bloodline","Grassland Seed","Forest Seed","Desert Seed","Beach Seed","Cave Seed","Coastal Bay Seed","Floating Ice Seed","Highland Seed","Jungle Seed","Mountain Seed","Mountain Range Seed","Polar Seed","Rock Wall Seed","Snowfield Seed","Tundra Seed","Valley Seed","Wasteland Seed","Dreamy Seed","Lunar Oracle","Starfall","Dreamzone",
+  // Seed traits (ตามที่ผู้ใช้ยืนยัน)
+  "Golden Sheep Bloodline","Grassland Seed","Forest Seed","Desert Seed","Beach Seed","Cave Seed","Coastal Bay Seed","Floating Ice Seed","Highland Seed","Jungle Seed","Mountain Seed","Mountain Range Seed","Polar Seed","Rock Wall Seed","Snowfield Seed","Tundra Seed","Valley Seed","Wasteland Seed","Dreamy Seed","Lunar Oracle","Starfall","Dreamzone","Lucky Seed",
 ]);
 function firstSeedShort(a: Animal): string | null {
   const t = (a.traits || []).find((tr) => SEED_SET.has(tr.name));
@@ -158,10 +158,27 @@ function repAnimal(c: Character, idx: number, a: Animal): Character {
 // ---------------- Traits Editor ----------------
 function TraitsEditor({ traits, onChange }: { traits: Trait[]; onChange: (t: Trait[]) => void }) {
   const OPTIONS = [
-    "High Yield","Rapid Production","Premium Output","Quality Meat",
-    "Acidic Meat","Meaty","Dieting","Thick Hides","True Grit","Resilience","Ferocity","Stormchild","Vigor","Docile",
-    "Golden Sheep Bloodline","Grassland Seed","Forest Seed","Desert Seed","Beach Seed","Cave Seed","Coastal Bay Seed","Floating Ice Seed","Highland Seed","Jungle Seed","Mountain Seed","Mountain Range Seed","Polar Seed","Rock Wall Seed","Snowfield Seed","Tundra Seed","Valley Seed","Wasteland Seed","Dreamy Seed","Lunar Oracle","Starfall","Dreamzone",
-  ];
+  // Basic
+  "High Yield","Rapid Production","Premium Output","Quality Meat",
+  "Acidic Meat","Meaty","Dieting","Thick Hides","True Grit","Resilience","Ferocity","Stormchild","Vigor","Docile",
+
+  // Seed
+  "Golden Sheep Bloodline","Grassland Seed","Forest Seed","Desert Seed","Beach Seed","Cave Seed","Coastal Bay Seed",
+  "Floating Ice Seed","Highland Seed","Jungle Seed","Mountain Seed","Mountain Range Seed","Polar Seed","Rock Wall Seed",
+  "Snowfield Seed","Tundra Seed","Valley Seed","Wasteland Seed","Dreamy Seed","Lunar Oracle","Starfall","Dreamzone","Lucky Seed",
+
+  // Beastmaster / Mutant / Factor
+  "Mutant","Fireborn","Thunderborn","Frostborn","Stardustborn","Rosetta Scourge","Vultures Scourge","Stardust Dairy","Tough Heritage","Alert","Treasure Hunter","Gluttonous Scent",
+
+  // Special / Battle
+  "Master Digger","Gathering Expert","Precision Battle Cry","Bully","Alpha Wolf","Tearer",
+
+  // Ecological / Resource
+  "Ecological Free-Range","Salt Supplement","Honey Hunter","Truffle Scent","Nut Thief",
+
+  // Summoner / Support
+  "Pathfinder","Reinforcement","Shared Growth","Wrath of Nature",
+];
   const add = () => preserveScroll(() => onChange([...(traits || []), { name: OPTIONS[0], rank: "I" }]));
   const setT = (i: number, p: Partial<Trait>) => preserveScroll(() => onChange((traits || []).map((t, idx) => (idx === i ? { ...t, ...p } : t))));
   const del = (i: number) => preserveScroll(() => onChange((traits || []).filter((_, idx) => idx !== i)));
